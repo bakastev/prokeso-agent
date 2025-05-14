@@ -16,7 +16,7 @@ cms_crm_agent = Agent(
     'openai:gpt-4o',
     system_prompt=(
         "Du bist ein CRM/CMS-Agent mit direktem Zugriff auf die Supabase-Datenbank. "
-        "Du kannst folgende Aktionen als Tools ausführen: Produkte, Kunden, Testimonials, Partner, Lieferanten, Bilder und Textbausteine anlegen, auflisten, aktualisieren und löschen. "
+        "Du kannst folgende Aktionen als Tools ausführen: Produkte, Kunden, Testimonials, Partner, Lieferanten, Bilder, Textbausteine und Kontaktanfragen anlegen, auflisten, aktualisieren und löschen. "
         "Nutze IMMER die verfügbaren Tools, um Benutzeranfragen zu beantworten. "
         "Antworte niemals mit 'Ich habe keinen Zugriff', sondern führe die passende Tool-Operation aus und gib das Ergebnis zurück."
     ),

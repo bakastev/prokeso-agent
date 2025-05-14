@@ -300,4 +300,47 @@ async def delete_image(ctx: RunContext[Deps], id: str) -> str:
         f'{ctx.deps.supabase_url}/rest/v1/images?id=eq.{id}',
         headers={'Authorization': f'Bearer {ctx.deps.supabase_api_key}', 'apikey': ctx.deps.supabase_api_key}
     )
-    return "Bild erfolgreich gelöscht." if response.status_code == 204 else f"Fehler beim Löschen: {response.text}" 
+    return "Bild erfolgreich gelöscht." if response.status_code == 204 else f"Fehler beim Löschen: {response.text}"
+
+# --- contact_requests ---
+@cms_crm_agent.tool
+async def create_contact_request(ctx: RunContext[Deps], contact_request_info: dict) -> str:
+    response = await ctx.deps.client.post(
+        f'{ctx.deps.supabase_url}/rest/v1/contact_requests',
+        headers={
+            'Authorization': f'Bearer {ctx.deps.supabase_api_key}',
+            'Content-Type': 'application/json',
+            'apikey': ctx.deps.supabase_api_key
+        },
+        json=contact_request_info
+    )
+    return "Kontaktanfrage erfolgreich erstellt." if response.status_code == 201 else f"Fehler beim Erstellen: {response.text}"
+
+@cms_crm_agent.tool
+async def list_contact_requests(ctx: RunContext[Deps]) -> list:
+    response = await ctx.deps.client.get(
+        f'{ctx.deps.supabase_url}/rest/v1/contact_requests?select=*',
+        headers={'Authorization': f'Bearer {ctx.deps.supabase_api_key}', 'apikey': ctx.deps.supabase_api_key}
+    )
+    return response.json() if response.status_code == 200 else []
+
+@cms_crm_agent.tool
+async def update_contact_request(ctx: RunContext[Deps], id: str, update_data: dict) -> str:
+    response = await ctx.deps.client.patch(
+        f'{ctx.deps.supabase_url}/rest/v1/contact_requests?id=eq.{id}',
+        headers={
+            'Authorization': f'Bearer {ctx.deps.supabase_api_key}',
+            'Content-Type': 'application/json',
+            'apikey': ctx.deps.supabase_api_key
+        },
+        json=update_data
+    )
+    return "Kontaktanfrage erfolgreich aktualisiert." if response.status_code == 204 else f"Fehler beim Aktualisieren: {response.text}"
+
+@cms_crm_agent.tool
+async def delete_contact_request(ctx: RunContext[Deps], id: str) -> str:
+    response = await ctx.deps.client.delete(
+        f'{ctx.deps.supabase_url}/rest/v1/contact_requests?id=eq.{id}',
+        headers={'Authorization': f'Bearer {ctx.deps.supabase_api_key}', 'apikey': ctx.deps.supabase_api_key}
+    )
+    return "Kontaktanfrage erfolgreich gelöscht." if response.status_code == 204 else f"Fehler beim Löschen: {response.text}" 
