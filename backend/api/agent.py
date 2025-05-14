@@ -3,10 +3,19 @@ import httpx
 import os
 from dotenv import load_dotenv
 from agent import cms_crm_agent, Deps
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Für Produktion ggf. spezifische Domains eintragen
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/api/agent")
 async def agent_endpoint(request: Request):
