@@ -1,0 +1,7 @@
+fastapi
+httpx
+pydantic
+pydantic-ai
+logfire
+uvicorn
+python-dotenv 
